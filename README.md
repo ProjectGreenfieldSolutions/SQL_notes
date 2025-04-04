@@ -151,7 +151,7 @@ SELECT
   name,
   COALESCE(phone, 'No phone provided') AS contact_number
 FROM customers;
-
+```
 ---
 
 **`NULLIF`**  
@@ -165,3 +165,4 @@ SELECT
   quantity,
   total_amount / NULLIF(quantity, 0) AS unit_price
 FROM orders;
+```
