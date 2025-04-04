@@ -193,3 +193,39 @@ SELECT
   GREATEST(score1, score2) AS top_score
 FROM test_results;
 ```
+---
+
+**`CAST`**  
+Converts a value from one data type to another.  
+**Why it's handy:** Ensures proper data type handling for comparisons, calculations, or formatting.  
+**Example:**  
+```sql
+SELECT 
+  order_id,
+  CAST(order_date AS DATE) AS simple_date,
+  CAST(total_amount AS DECIMAL(10,2)) AS amount
+FROM orders;
+```
+
+---
+
+**`DISTINCT`**  
+Returns only unique (non-duplicate) rows from a query result.  
+**Why it's handy:** Eliminates duplicates when selecting from columns that may contain repeated values.  
+**Example:**  
+```sql
+SELECT DISTINCT country
+FROM customers;
+```
+
+---
+
+**`DISTINCT ON`** *(PostgreSQL only)*  
+Returns the first row for each unique value of specified columns, based on sort order.  
+**Why it's handy:** Efficient way to get "first of each group" without subqueries or window functions.  
+**Example:**  
+```sql
+SELECT DISTINCT ON (customer_id) *
+FROM orders
+ORDER BY customer_id, order_date DESC;
+```
