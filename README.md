@@ -151,3 +151,17 @@ SELECT
   name,
   COALESCE(phone, 'No phone provided') AS contact_number
 FROM customers;
+
+---
+
+**`NULLIF`**  
+Returns `NULL` if two expressions are equal; otherwise, returns the first expression.  
+**Why it's handy:** Helps avoid divide-by-zero errors or filter out unwanted matches.  
+**Example:**  
+```sql
+SELECT 
+  order_id,
+  total_amount,
+  quantity,
+  total_amount / NULLIF(quantity, 0) AS unit_price
+FROM orders;
