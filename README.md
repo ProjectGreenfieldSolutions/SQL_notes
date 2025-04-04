@@ -123,3 +123,31 @@ WITH recent_orders AS (
 SELECT * FROM recent_orders
 WHERE total > 100;
 ```
+---
+
+**`CASE WHEN`**  
+A conditional expression to return values based on logic, like an inline `IF/ELSE`.  
+**Why it's handy:** Great for categorizing or transforming data based on conditions.  
+**Example:**  
+```sql
+SELECT 
+  name,
+  price,
+  CASE 
+    WHEN price > 100 THEN 'Expensive'
+    WHEN price BETWEEN 50 AND 100 THEN 'Moderate'
+    ELSE 'Cheap'
+  END AS price_category
+FROM products;
+```
+---
+
+**`COALESCE`**  
+Returns the first non-null value from a list of expressions.  
+**Why it's handy:** Useful for handling missing data by providing fallback values.  
+**Example:**  
+```sql
+SELECT 
+  name,
+  COALESCE(phone, 'No phone provided') AS contact_number
+FROM customers;
