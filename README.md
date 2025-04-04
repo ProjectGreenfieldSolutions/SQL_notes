@@ -166,3 +166,30 @@ SELECT
   total_amount / NULLIF(quantity, 0) AS unit_price
 FROM orders;
 ```
+---
+
+**`LEAST`**  
+Returns the smallest (minimum) value from a list of expressions.  
+**Why it's handy:** Quickly finds the lowest value among multiple columns or expressions.  
+**Example:**  
+```sql
+SELECT 
+  name,
+  price1,
+  price2,
+  LEAST(price1, price2) AS lowest_price
+FROM products;
+```
+
+**`GREATEST`**  
+Returns the largest (maximum) value from a list of expressions.  
+**Why it's handy:** Useful for comparing columns or fallback strategies to pick the highest value.  
+**Example:**  
+```sql
+SELECT 
+  name,
+  score1,
+  score2,
+  GREATEST(score1, score2) AS top_score
+FROM test_results;
+```
