@@ -333,3 +333,48 @@ Calculates the Pearson correlation coefficient between two numeric columns.
 SELECT CORR(price, sales) AS price_sales_correlation
 FROM product_metrics;
 ```
+
+---
+
+**Windowing (Window Functions)**  
+Windowing refers to performing calculations across a "window" (subset) of rows related to the current row—without collapsing the result set.  
+**Why it's handy:** Lets you do things like running totals, rankings, moving averages, and comparisons *within groups* of rows, while still keeping all rows in the output.  
+**Example:**  
+```sql
+SELECT 
+  customer_id,
+  order_id,
+  order_date,
+  SUM(total_amount) OVER (PARTITION BY customer_id ORDER BY order_date) AS running_total
+FROM orders;
+```
+
+---
+
+**`PARTITION BY`**  
+Divides the result set into groups (partitions) for window functions to operate within.  
+**Why it's handy:** Enables row-level calculations (like ranking or running totals) scoped to logical groups—without collapsing rows like `GROUP BY` would.  
+**Example:**  
+```sql
+SELECT 
+  customer_id,
+  order_id,
+  order_date,
+  ROW_NUMBER() OVER (PARTITION BY customer_id ORDER BY order_date DESC) AS row_num
+FROM orders;
+```
+
+---
+
+**`ROW_NUMBER()`**  
+Assigns a unique, sequential number to each row within a result set, based on a specified ordering.  
+**Why it's handy:** Great for pagination, deduplication, or selecting the "first" row in a group.  
+**Example:**  
+```sql
+SELECT 
+  customer_id,
+  order_id,
+  order_date,
+  ROW_NUMBER() OVER (PARTITION BY customer_id ORDER BY order_date DESC) AS row_num
+FROM orders;
+```
