@@ -420,3 +420,118 @@ SELECT
   NTILE(4) OVER (ORDER BY total_spent DESC) AS spending_quartile
 FROM customers;
 ```
+
+---
+
+**`LAG()`**  
+Accesses a value from a previous row in the same result set (based on a defined order).  
+**Why it's handy:** Great for calculating differences between rows, tracking changes over time, or detecting trends.  
+**Example:**  
+```sql
+SELECT 
+  employee_id,
+  salary,
+  LAG(salary) OVER (PARTITION BY department_id ORDER BY hire_date) AS previous_salary
+FROM employees;
+```
+
+---
+
+**`LEAD()`**  
+Accesses a value from a following row in the same result set (based on a defined order).  
+**Why it's handy:** Great for comparing current values with future ones—helps identify upcoming changes or trends.  
+**Example:**  
+```sql
+SELECT 
+  employee_id,
+  salary,
+  LEAD(salary) OVER (PARTITION BY department_id ORDER BY hire_date) AS next_salary
+FROM employees;
+```
+
+---
+
+**`STR_TO_DATE()`** *(MySQL-specific)*  
+Converts a string into a date using a specified format.  
+**Why it's handy:** Essential for importing, parsing, or comparing date strings in custom formats.  
+**Example:**  
+```sql
+SELECT STR_TO_DATE('04-04-2025', '%d-%m-%Y') AS parsed_date;
+```
+
+---
+
+**`EXTRACT()`**  
+Pulls out specific parts of a date or timestamp (like year, month, day, etc.).  
+**Why it's handy:** Useful for grouping, filtering, or analyzing data based on time components.  
+**Example:**  
+```sql
+SELECT 
+  order_id,
+  order_date,
+  EXTRACT(YEAR FROM order_date) AS order_year
+FROM orders;
+```
+
+---
+
+**`DATE_ADD()`** *(MySQL-specific)*  
+Adds a time interval to a date value.  
+**Why it's handy:** Perfect for calculating future dates, setting expiration periods, or scheduling events.  
+**Example:**  
+```sql
+SELECT 
+  order_date,
+  DATE_ADD(order_date, INTERVAL 7 DAY) AS delivery_date
+FROM orders;
+```
+
+---
+
+**`DATE_SUB()`** *(MySQL-specific)*  
+Subtracts a time interval from a date value.  
+**Why it's handy:** Great for filtering or calculating past dates—like finding data from "7 days ago" or setting expiration windows.  
+**Example:**  
+```sql
+SELECT 
+  CURRENT_DATE AS today,
+  DATE_SUB(CURRENT_DATE, INTERVAL 30 DAY) AS thirty_days_ago;
+```
+
+---
+
+**`INTERVAL`**  
+Represents a span of time used in date arithmetic (e.g., days, months, years).  
+**Why it's handy:** Lets you add or subtract flexible time values in a readable way across many SQL functions.  
+**Example (MySQL):**  
+```sql
+SELECT 
+  order_date,
+  DATE_ADD(order_date, INTERVAL 1 MONTH) AS next_billing_date
+FROM subscriptions;
+```
+
+---
+
+**`DATEDIFF()`** *(MySQL & SQL Server)*  
+Returns the number of days between two dates.  
+**Why it's handy:** Simple way to calculate durations—like age, overdue days, or time between events.  
+**Example (MySQL/SQL Server):**  
+```sql
+SELECT 
+  DATEDIFF(CURRENT_DATE, order_date) AS days_since_order
+FROM orders;
+```
+
+---
+
+**`TIMESTAMPDIFF()`** *(MySQL-specific)*  
+Returns the difference between two date/timestamp values in the unit you specify.  
+**Why it's handy:** Lets you calculate exact differences in days, months, hours, minutes, etc.—not just days like `DATEDIFF()`.  
+**Example:**  
+```sql
+SELECT 
+  TIMESTAMPDIFF(DAY, order_date, CURRENT_DATE) AS days_elapsed,
+  TIMESTAMPDIFF(MONTH, signup_date, CURRENT_DATE) AS account_age_months
+FROM users;
+```
