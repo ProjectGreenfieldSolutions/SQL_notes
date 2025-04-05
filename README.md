@@ -378,3 +378,45 @@ SELECT
   ROW_NUMBER() OVER (PARTITION BY customer_id ORDER BY order_date DESC) AS row_num
 FROM orders;
 ```
+
+---
+
+**`RANK()`**  
+Assigns a rank to each row within a partition, with gaps for tied values.  
+**Why it's handy:** Useful when ranking data with equal values—tied items get the same rank, and the next rank is skipped accordingly.  
+**Example:**  
+```sql
+SELECT 
+  student_id,
+  test_score,
+  RANK() OVER (ORDER BY test_score DESC) AS rank
+FROM test_results;
+```
+
+---
+
+**`DENSE_RANK()`**  
+Assigns a rank to each row, like `RANK()`, but **without gaps** between tied values.  
+**Why it's handy:** Useful when you want ties to share a rank but keep the next rank consecutive—great for clean, gapless rankings.  
+**Example:**  
+```sql
+SELECT 
+  student_id,
+  test_score,
+  DENSE_RANK() OVER (ORDER BY test_score DESC) AS dense_rank
+FROM test_results;
+```
+
+---
+
+**`NTILE()`**  
+Distributes rows into a specified number of roughly equal-sized buckets (tiles).  
+**Why it's handy:** Great for percentile-based analysis—like quartiles, deciles, or custom groupings.  
+**Example:**  
+```sql
+SELECT 
+  customer_id,
+  total_spent,
+  NTILE(4) OVER (ORDER BY total_spent DESC) AS spending_quartile
+FROM customers;
+```
